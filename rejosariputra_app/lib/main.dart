@@ -1,6 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
+
+import 'values/colors.dart';
+import 'view/home/catatan_keuangan_screen.dart';
+import 'view/home/home_screen.dart';
+import 'view/onboarding/login_screen.dart';
+import 'view/home/pembelian/pembelian_list_screen.dart';
+import 'view/home/penjualan/penjualan_list_screen.dart';
+import 'view/onboarding/splash_screen.dart';
 
 void main() {
+  final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   runApp(const MyApp());
 }
 
@@ -11,58 +22,110 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Rejosariputra',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Rejosariputra Home'),
-    );
-  }
-}
+        scaffoldBackgroundColor: Colors.white,
+        primarySwatch: ColorPalette.primary,
+        fontFamily: "Inter",
+        floatingActionButtonTheme: const FloatingActionButtonThemeData(
+          backgroundColor: ColorPalette.primary,
+        ),
+        dividerTheme: DividerThemeData(
+          color: ColorPalette.neutral[300],
+          indent: 20,
+          endIndent: 20,
+          space: 5,
+          thickness: 1,
+        ),
+        textTheme: const TextTheme(
+          //HEADING 1
+          displayLarge: TextStyle(
+            fontSize: 32,
+            fontWeight: FontWeight.w700,
+          ),
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+          //HEADING 2
+          displayMedium: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.w700,
+          ),
 
-  final String title;
+          //HEADING 3
+          displaySmall: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w700,
+          ),
 
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
+          //HEADING 4
+          headlineMedium: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w700,
+          ),
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+          // Label 1
+          labelLarge: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w700,
+          ),
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+          // Label 2
+          labelMedium: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w600,
+          ),
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+          // Paragraph 1
+          bodyLarge: TextStyle(
+            fontSize: 14,
+          ),
+
+          // Paragraph 2
+          bodyMedium: TextStyle(
+            fontSize: 12,
+          ),
+
+          // Overline
+          labelSmall: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w400,
+            letterSpacing: 1,
+          ),
+
+          // Caption
+          bodySmall: TextStyle(
+            fontSize: 10,
+          ),
+        ).apply(
+          displayColor: ColorPalette.neutral,
+          bodyColor: ColorPalette.neutral,
+          decorationColor: ColorPalette.neutral,
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            padding: const EdgeInsets.symmetric(vertical: 15),
+            textStyle: Theme.of(context).textTheme.labelLarge,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(8)),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+          ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
+      routes: {
+        // ONBOARDING
+        SplashScreen.routeName: (_) => const SplashScreen(),
+        LoginScreen.routeName: (_) => const LoginScreen(),
+
+        //HOME
+        HomeScreen.routeName: (_) => const HomeScreen(),
+        CatatanKeuanganScreen.routeName: (_) => const CatatanKeuanganScreen(),
+
+        // PEMBELIAN
+        PembelianListScreen.routeName: (_) => const PembelianListScreen(),
+
+        // PENJUALAN
+        PenjualanListScreen.routeName: (_) => const PenjualanListScreen()
+      },
     );
   }
 }
